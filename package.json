@@ -1,0 +1,11 @@
+{
+  "name": "game-with-bro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BRO ARTILLERY \u2014 a silly local hot-seat artillery duel for two brothers and one keyboard.",
+  "type": "module",
+  "scripts": {
+    "start": "node serve.mjs",
+    "dev": "node serve.mjs"
+  }
+}

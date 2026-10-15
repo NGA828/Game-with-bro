@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>BRO ARTILLERY — Game with Bro</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="app">
+  <header id="topbar">
+    <div class="brand">BRO<span>ARTILLERY</span></div>
+
+    <div class="windbox" title="Wind pushes your shots sideways. It changes every turn.">
+      <span class="windlabel">WIND</span>
+      <span id="windArrow" class="windarrow">→</span>
+      <span id="windValue" class="windvalue">0</span>
+    </div>
+
+    <div class="topright">
+      <div id="roundLabel" class="roundlabel">ROUND 1</div>
+      <button id="btn-help" class="iconbtn" title="Controls (H)">?</button>
+      <button id="btn-sound" class="iconbtn" title="Sound (M)">🔊</button>
+      <button id="btn-restart" class="iconbtn" title="Restart (R)">⟳</button>
+    </div>
+  </header>
+
+  <main id="stage">
+    <div id="frame">
+      <canvas id="game"></canvas>
+
+      <!-- player cards -->
+      <div id="p1card" class="card card-p1">
+        <div class="cardtop"><span class="pname">BRO 1</span><span class="hpmax">/100</span></div>
+        <div class="hpbar"><div class="hpfill"></div></div>
+        <div class="cardfoot"><span class="hpnum">100</span><span class="pstat"></span></div>
+      </div>
+
+      <div id="p2card" class="card card-p2">
+        <div class="cardtop"><span class="pname">BRO 2</span><span class="hpmax">/100</span></div>
+        <div class="hpbar"><div class="hpfill"></div></div>
+        <div class="cardfoot"><span class="hpnum">100</span><span class="pstat"></span></div>
+      </div>
+
+      <div id="turnpuck" class="turnpuck">ROUND 1</div>
+
+      <div id="banner" class="banner hidden">
+        <div id="bannerText" class="bannertext">BRO 1</div>
+        <div id="bannerSub" class="bannersub">your turn, big shot</div>
+      </div>
+
+      <div id="feed" class="feed"></div>
+
+      <div id="weapons" class="weapons"></div>
+
+      <div id="hint" class="hint">
+        <b>MOVE</b> A / D &nbsp;·&nbsp; <b>AIM</b> mouse or W / S &nbsp;·&nbsp; <b>FIRE</b> hold click or SPACE, release &nbsp;·&nbsp; <b>WEAPON</b> 1–5 or Q/E &nbsp;·&nbsp; <b>HELP</b> H
+      </div>
+
+      <!-- start screen -->
+      <div id="overlay-start" class="overlay">
+        <div class="panel">
+          <h1 class="title">BRO<span>ARTILLERY</span></h1>
+          <p class="tagline">two tanks. one keyboard. destroy the terrain, and your brother along with it.</p>
+
+          <div class="howto">
+            <div class="hcol">
+              <h3>Controls</h3>
+              <ul>
+                <li><b>A / D</b> — drive (limited fuel)</li>
+                <li><b>Mouse</b> or <b>W / S</b> — aim</li>
+                <li><b>Hold click / SPACE</b> — charge power, release to FIRE</li>
+                <li><b>1–5</b> or <b>Q / E</b> — pick a weapon</li>
+                <li><b>R</b> — restart &nbsp;·&nbsp; <b>H</b> — help &nbsp;·&nbsp; <b>M</b> — mute</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>The rules of war</h3>
+              <ul>
+                <li>Turn-based. Blow up your bro before he blows up you.</li>
+                <li>Wind changes every turn. It <i>will</i> betray you.</li>
+                <li>You <i>can</i> blow yourself up. It's very funny.</li>
+                <li>Blast a hole under him — gravity does the rest.</li>
+                <li>After round 11: <b class="goo">THE GOO RISES</b>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="startrow">
+            <label class="check"><input type="checkbox" id="timerToggle" /> 45-second turn timer (more chaos)</label>
+            <button id="btn-start" class="bigbtn">LIGHT IT UP 🔥</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- win screen -->
+      <div id="overlay-win" class="overlay hidden">
+        <div class="panel">
+          <h1 id="winTitle" class="title small">BRO 1 WINS</h1>
+          <p id="winQuip" class="tagline"></p>
+          <div id="winStats" class="winstats"></div>
+          <div class="startrow center">
+            <button id="btn-rematch" class="bigbtn">REMATCH ⚔️</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- help -->
+      <div id="overlay-help" class="overlay hidden">
+        <div class="panel">
+          <h1 class="title small">HOW TO WAR</h1>
+          <div class="howto">
+            <div class="hcol">
+              <h3>Controls</h3>
+              <ul>
+                <li><b>A / D</b> — drive left/right (fuel is limited per turn)</li>
+                <li><b>Mouse</b> — aim from the barrel tip</li>
+                <li><b>W / S</b> — fine-tune angle 1° at a time</li>
+                <li><b>Hold click or SPACE</b> — power meter charges, release to fire</li>
+                <li><b>1–5 / Q / E</b> — choose weapon</li>
+                <li><b>R</b> restart · <b>M</b> mute · <b>H</b> close</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Arsenal</h3>
+              <ul id="helpWeapons"></ul>
+            </div>
+          </div>
+          <div class="startrow center">
+            <button id="btn-close-help" class="bigbtn">GOT IT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

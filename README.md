@@ -4,14 +4,73 @@ A silly local hot-seat artillery duel for **two brothers and one keyboard**.
 Blast craters in the terrain, launch a psychopathic duck, and knock your brother
 into the rising goo. Turn-based, so no netcode, no accounts, no waiting.
 
-```
-node serve.mjs          # then open http://localhost:4173
+---
+
+## Setting it up
+
+There is **nothing to install and nothing to compile** — no `npm install`, no
+build step, no dependencies. You just need the files served over HTTP.
+
+### ⚠️ Don't just double-click `index.html`
+
+It will show a blank screen. Browsers refuse to load ES modules from `file://`,
+and this game is pure ES modules. Run one of the servers below instead — that's
+the whole reason `serve.mjs` exists.
+
+### Step 1 — get the files
+
+Either clone it:
+
+```bash
+git clone --branch arena/7b5e22e1-game-with-bro https://github.com/NGA828/Game-with-bro.git
+cd Game-with-bro
 ```
 
-(or `npm start` — zero dependencies, no install needed)
+Or on GitHub: pick `arena/7b5e22e1-game-with-bro` from the branch dropdown,
+then **Code → Download ZIP**, and unzip it. (If you download the ZIP from `main`
+before this is merged, you'll get a README and nothing else — check the branch.)
 
-> ES modules can't load over `file://`, so it does need to be served. Any static
-> server works; `serve.mjs` is a 60-line one with no dependencies.
+### Step 2 — start a server in that folder
+
+Any one of these works. Pick whatever you already have:
+
+```bash
+node serve.mjs              # needs Node 18+  ->  http://localhost:4173
+npm start                   # same thing
+node serve.mjs 8080         # or choose your own port
+```
+
+No Node? Python is already on most Macs and Linux boxes:
+
+```bash
+python3 -m http.server 4173
+```
+
+Then open **http://localhost:4173** in Chrome, Firefox, Safari or Edge.
+
+### Step 3 — play
+
+Hit **LIGHT IT UP 🔥**, and press `F11` (or `Cmd/Ctrl + Shift + F`) for
+fullscreen. Both bros use the same keys and take turns, so one keyboard is
+enough. Click anywhere once before you start — browsers block sound until you
+do, and the START button handles that for you.
+
+### If something looks wrong
+
+| Symptom | Cause |
+|---|---|
+| Blank white/black page | You opened `index.html` directly. Use the server. |
+| `Failed to load module script` | Same thing — served over `file://`. |
+| No sound | Click once anywhere first, or press `M` (mute toggle). |
+| Page is tiny / has scrollbars | Maximise the window; the canvas scales to fit. |
+| `EADDRINUSE` | Something is on port 4173 — `node serve.mjs 8080`. |
+
+### Playing with a bro who isn't in the room
+
+This build is **local hot-seat only** — one keyboard, one screen, taking turns.
+For a remote bro your options are a screen share where he calls the shots, or
+adding online play (turn-based, so it's a genuinely small job: just exchange
+shot coordinates).
 
 ---
 

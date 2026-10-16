@@ -25,53 +25,91 @@ function freq(note) {
 // A pattern is a space separated list of steps: a note name, "." for a rest,
 // or a drum letter (k = kick, s = snare, h = hat, c = crash).
 
-const TRACKS = {
+export const TRACKS = {
+  // SOUL SOCIETY - the calm of the afterlife. The hub theme.
   hub: {
-    bpm: 92,
-    lead: 'E5 . . . . . B4 . G4 . . . . . . . | A5 . . . . . C5 . E5 . . . . . . . | ' +
-          'D5 . . . . . A4 . F#4 . . . . . . . | G4 . . . . . D5 . B4 . . . . . . . ',
-    bass: 'C2 . . . G2 . . . A2 . . . E2 . . | F2 . . . C3 . . . D2 . . . A2 . . | ' +
-          'E2 . . . B2 . . . F2 . . . G2 . . | C2 . . . G2 . . . C2 . . . . . . . ',
-    drums: 'k . . . h . . . s . . . h . . . | k . . . h . . . s . . . h . . . | ' +
-            'k . . . h . . . s . . . h . . . | k . . . h . . . s . . . h . h k . ',
+    name: 'SOUL SOCIETY',
+    bpm: 84,
+    lead: 'D5 . F5 . A5 . F5 . D5 . . . . . . . | ' +
+          'C5 . E5 . G5 . E5 . C5 . . . . . . . | ' +
+          'Bb4 . D5 . F5 . D5 . Bb4 . . . . . . . | ' +
+          'A4 . . . D5 . F5 . A5 . . . . . . .',
+    bass: 'D2 . . . . . . . A2 . . . . . . . | ' +
+          'C2 . . . . . . . G2 . . . . . . . | ' +
+          'Bb1 . . . . . . . F2 . . . . . . . | ' +
+          'A1 . . . . . . . D2 . . . . . . .',
+    drums: 'k . . . h . . . s . . . h . . . | ' +
+          'k . . . h . . . s . . . h . . . | ' +
+          'k . . . h . . . s . . . h . . . | ' +
+          'k . . . h . h . s . . . h h k .',
   },
+  // STEALTH FORCE - the Onmitsukido sneaking up on you.
   artillery: {
-    bpm: 118,
-    lead: 'C5 . E5 . G5 . E5 . C5 . D5 . E5 . | F5 . E5 . D5 . C5 . G4 . A4 . B4 . | ' +
-          'C5 . E5 . G5 . C6 . G5 . E5 . D5 . | E5 . D5 . C5 . B4 . A4 . G4 . . . . ',
-    bass: 'C3 . C3 . G2 . G2 . A2 . A2 . E2 . E2 . | F2 . F2 . C3 . C3 . D2 . D2 . A2 . A2 . | ' +
-          'C3 . C3 . G2 . G2 . F2 . F2 . G2 . G2 . | E3 . E3 . E3 . E3 . D3 . D3 . C3 . . . ',
-    drums: 'k . h . s . h . k . h . s . h h | k . h . s . h . k . h . s . h h | ' +
-            'k . h . s . h . k . h . s . h h | k . h . s . h . k k s . s . h h ',
+    name: 'STEALTH FORCE',
+    bpm: 112,
+    lead: 'A4 . . . C5 . . . B4 . . . A4 . . . | ' +
+          'G4 . . . A4 . . . G#4 . . . A4 . . . | ' +
+          'E4 . . . G4 . . . F#4 . . . E4 . . . | ' +
+          'A4 . . . E5 . . . D5 . . . C5 . . .',
+    bass: 'A1 . A1 . A1 . E2 . E2 . E2 . E2 . E2 . | ' +
+          'G1 . G1 . G1 . D2 . D2 . D2 . D2 . D2 . | ' +
+          'E1 . E1 . E1 . B1 . B1 . B1 . B1 . B1 . | ' +
+          'A1 . A1 . A1 . A1 . E2 . E2 . E2 . E2 .',
+    drums: 'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k k s . s . h h',
   },
+  // BANDAI - everything on at once. The duel theme.
   fighter: {
-    bpm: 152,
-    lead: 'A4 . . . C5 . E5 . D5 . C5 . B4 . | A4 . . . G4 . A4 . C5 . E5 . . . . | ' +
-          'F5 . E5 . D5 . C5 . B4 . A4 . . . . | G4 . A4 . B4 . C5 . D5 . E5 . A5 . . ',
-    bass: 'A1 A1 . A1 . A1 . A1 . E2 . E2 . | F1 F1 . F1 . F1 . F1 . C2 . C2 . | ' +
-          'D1 D1 . D1 . D1 . D1 . A1 A1 A1 A1 | G1 G1 . G1 . G1 . G1 . A1 A1 A1 A1 ',
-    drums: 'k . h . s . h . k h s . h . h h | k . h . s . h . k h s . h . h h | ' +
-            'k . h . s . h . k h s . h . h h | k k s . s . h . k k s . s s h h ',
+    name: 'BANDAI',
+    bpm: 158,
+    lead: 'E5 . E5 . G5 . E5 . B4 . E5 . F#5 . E5 . | ' +
+          'D5 . D5 . F#5 . D5 . A4 . D5 . E5 . D5 . | ' +
+          'C5 . C5 . E5 . C5 . G4 . C5 . D5 . C5 . | ' +
+          'B5 . . . A5 . . . G5 . . . F#5 . . .',
+    bass: 'E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 E2 | ' +
+          'D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 D2 | ' +
+          'C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 C2 | ' +
+          'B1 B1 B1 B1 B1 B1 B1 B1 B1 B1 B1 B1 B1 B1 B1 B1',
+    drums: 'k . h . s . h . k h s . h . h h | ' +
+          'k . h . s . h . k h s . h . h h | ' +
+          'k . h . s . h . k h s . h . h h | ' +
+          'k k s . s . h . k k s . s s h h',
   },
+  // HOLLOW HUNT - chasing something down a street at night.
   racer: {
-    bpm: 140,
-    lead: 'E5 . B4 . C5 . D5 . E5 . . . G5 . . . | F5 . C5 . D5 . E5 . F5 . . . A5 . . . | ' +
-          'G5 . D5 . E5 . F5 . G5 . . . B5 . . . | A5 . E5 . F5 . G5 . A5 . . . . . . . ',
-    bass: 'E2 E2 E2 E2 E2 E2 E2 E2 C2 C2 C2 C2 C2 C2 C2 C2 | ' +
-          'D2 D2 D2 D2 D2 D2 D2 D2 B1 B1 B1 B1 B1 B1 B1 B1 | ' +
-          'C2 C2 C2 C2 C2 C2 C2 C2 G2 G2 G2 G2 G2 G2 G2 G2 | ' +
-          'A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 A2 ',
-    drums: 'k . . . h . s . . k . . . h . s . | k . . . h . s . . k . . . h . s h | ' +
-            'k . . . h . s . . k . . . h . s . | k . . . h . s . . k k k . s . s h ',
+    name: 'HOLLOW HUNT',
+    bpm: 146,
+    lead: 'G5 . D5 . G5 . Bb5 . D5 . . . G5 . . . | ' +
+          'F5 . C5 . F5 . A5 . C5 . . . F5 . . . | ' +
+          'Eb5 . Bb4 . Eb5 . G5 . Bb4 . . . Eb5 . . . | ' +
+          'D5 . A5 . D5 . F5 . A5 . . . D6 . . .',
+    bass: 'G1 G1 G1 G1 G1 G1 G1 G1 D2 D2 D2 D2 D2 D2 D2 D2 | ' +
+          'F1 F1 F1 F1 F1 F1 F1 F1 C2 C2 C2 C2 C2 C2 C2 C2 | ' +
+          'Eb1 Eb1 Eb1 Eb1 Eb1 Eb1 Eb1 Eb1 Bb1 Bb1 Bb1 Bb1 Bb1 Bb1 Bb1 Bb1 | ' +
+          'D2 D2 D2 D2 D2 D2 D2 D2 A2 A2 A2 A2 A2 A2 A2 A2',
+    drums: 'k . . . h . s . . k . . h . s h | ' +
+          'k . . . h . s . . k . . h . s h | ' +
+          'k . . . h . s . . k . . h . s h | ' +
+          'k . . . h . s . k k k . s . s h',
   },
+  // ZANPAKUTO - sword out, ready to go. The shooter theme.
   shmup: {
-    bpm: 126,
-    lead: 'D5 . F5 . A5 . . . G5 . F5 . E5 . . . | C5 . E5 . G5 . . . F5 . E5 . D5 . . . | ' +
-          'Bb4 . D5 . F5 . . . A5 . G5 . F5 . . . | E5 . . . A4 . . . D5 . . . . . . . ',
-    bass: 'D2 . . . D2 . . . C2 . . . C2 . . . | G2 . . . G2 . . . A2 . . . A2 . . . | ' +
-          'Bb1 . . . Bb1 . . . F2 . . . F2 . . . | E2 . . . E2 . . . A2 . . . A2 . . . ',
-    drums: 'k . . h . . s . k . . h . . s . | k . . h . . s . k . . h . . s h | ' +
-            'k . . h . . s . k . . h . . s . | k k h . s . h . k k s . s . s h h ',
+    name: 'ZANPAKUTO',
+    bpm: 132,
+    lead: 'C5 . E5 . G5 . C6 . G5 . E5 . C5 . . . | ' +
+          'D5 . F#5 . A5 . D6 . A5 . F#5 . D5 . . . | ' +
+          'E5 . G5 . B5 . E6 . B5 . G5 . E5 . . . | ' +
+          'F5 . A5 . C6 . G5 . . . . . . . . .',
+    bass: 'C2 . . . C2 . . . G2 . . . C2 . . . | ' +
+          'D2 . . . D2 . . . A2 . . . D2 . . . | ' +
+          'E2 . . . E2 . . . B2 . . . E2 . . . | ' +
+          'F2 . . . C2 . . . C2 . . . C2 . . .',
+    drums: 'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k . h . s . h h | ' +
+          'k k h . s . h . k k s . s . h h',
   },
 };
 
@@ -275,6 +313,12 @@ export function isMusicPlaying() {
 /** The track that is (or was) playing - used when the music is switched on. */
 export function lastTrack() {
   return lastTrackId || pendingTrack;
+}
+
+/** The title of a track, e.g. "SOUL SOCIETY". */
+export function trackName(id) {
+  const t = TRACKS[id];
+  return t ? t.name : String(id || '').toUpperCase();
 }
 
 /** Called when the settings panel changes the music volume. */

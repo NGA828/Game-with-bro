@@ -132,6 +132,11 @@
 .cfgtoast.show{ opacity:1; transform:none; }
 .cfgtoast.bad{ background:#2a1414; color:#ff8a3d; }
 
+.cfgsong{
+  margin-top:9px; font-size:11px; letter-spacing:1.2px; opacity:.72;
+}
+.cfgsong b{ color:#ffd166; }
+
 body.cfg-locked{ overflow:hidden; }
 
 /* ---------- the bar button that opens this panel ---------- */

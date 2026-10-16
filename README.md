@@ -84,9 +84,27 @@ keys up once and play everything.
 * **Everything is saved** in `localStorage`, so the setup survives a reload.
   `RESET DEFAULTS` puts the factory keys back.
 * **Background music** is a chiptune sequencer written in WebAudio — no audio
-  files, no downloads. The panel has an on/off switch and a volume slider.
-  Each game has its own track (the hub has a chill one, the fighter a driving
-  rock one, the racer a synthwave one, the ducks a spacey one).
+  files, no downloads. The panel has an on/off switch, a volume slider and
+  the name of the tune that is playing.
+
+### 🎵 The soundtrack
+
+Every game has its own **Bleach-flavoured theme**, written from scratch as
+chiptune for this arcade:
+
+| Game | Track | BPM | Vibe |
+|---|---|---|---|
+| The hub | **SOUL SOCIETY** | 84 | slow, floating, the calm of the afterlife |
+| BRO ARTILLERY | **STEALTH FORCE** | 112 | sneaky, chromatic, the Onmitsukido closing in |
+| HERO CLASH | **BANDAI** | 158 | driving rock riff, everything on at once |
+| TURBO BROS | **HOLLOW HUNT** | 146 | chase music, rolling bass |
+| DUCK INVADERS | **ZANPAKUTO** | 132 | bright, heroic, sword out |
+
+These are **original compositions written in the spirit of the Bleach
+soundtrack** — they are not the actual recordings or the actual melodies.
+Swap them any time: `js/shared/music.js` → `TRACKS` is just a BPM and three
+space-separated patterns (lead, bass, drums). `k` `s` `h` are kick, snare and
+hat, `.` is a rest.
 
 The games read the configuration live: rebind a key while you are playing and
 the very next frame uses the new one. The hint bar under the canvas updates
@@ -202,6 +220,7 @@ node tools/scenario-fighter.mjs # HERO CLASH: roster, specials, damage, KO
 node tools/scenario-racer.mjs   # TURBO BROS: physics, laps, AI, ranking
 node tools/scenario-shmup.mjs   # DUCK INVADERS: waves, boss, power-ups
 node tools/scenario-config.mjs  # the settings panel and the key bindings
+node tools/check-music.mjs      # the soundtrack: every track in sync
 ```
 
 `tools/svg-canvas.mjs` is a Canvas2D → SVG recorder, so a frame of any game
@@ -235,5 +254,7 @@ and `broGame` are all exposed on `window`.
 Built with canvas 2D, no frameworks, no dependencies, no build step.
 Have fun, and remember: it was lag.
 
-*My Hero Academia characters belong to Kōhei Horikoshi. This is an unofficial
-fan-made parody — no official assets, all art is drawn in code.*
+*My Hero Academia characters belong to Kōhei Horikoshi, and Bleach belongs to
+Tite Kubo and Pierrot. This is an unofficial fan-made parody — no official
+assets, no official music, all art is drawn in code and all the tunes are
+original chiptune homages written for this arcade.*

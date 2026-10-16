@@ -11,7 +11,7 @@ import {
 } from './config.js';
 import {
   setMusicVolume as applyMusicVolume, refreshMusicVolume,
-  startMusic, stopMusic, lastTrack,
+  startMusic, stopMusic, lastTrack, trackName,
 } from './music.js';
 
 let overlay = null;
@@ -145,6 +145,17 @@ function buildMusic() {
   slider.addEventListener('input', () => { vol.textContent = `${slider.value}%`; });
   row.appendChild(vol);
   box.appendChild(row);
+
+  // which tune is playing right now
+  const song = el('div', 'cfgsong');
+  const paintSong = () => {
+    const t = lastTrack();
+    song.innerHTML = t
+      ? `&#9834; NOW PLAYING: <b>${trackName(t)}</b>`
+      : '&#9834; pick a game for its theme';
+  };
+  paintSong();
+  box.appendChild(song);
   return box;
 }
 

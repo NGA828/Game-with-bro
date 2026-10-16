@@ -34,6 +34,40 @@ function freq(note) {
 // or a drum letter (k = kick, s = snare, h = hat, c = crash).
 
 export const TRACKS = {
+  // HOLLOW CASTLE - something waiting in the dark. The dungeon theme.
+  dungeon: {
+    name: 'HOLLOW CASTLE',
+    bpm: 100,
+    lead: 'A4 . . . C5 . . . B4 . . . E4 . . . | ' +
+          'A4 . . . . . . . E4 . . . A4 . . . | ' +
+          'F4 . . . A4 . . . G#4 . . . D4 . . . | ' +
+          'E4 . . . . . . . A4 . . . . . . .',
+    bass: 'A1 . . . . . . . E2 . . . . . . . | ' +
+          'A1 . . . . . . . E2 . . . . . . . | ' +
+          'F1 . . . . . . . D2 . . . . . . . | ' +
+          'E1 . . . . . . . A1 . . . . . . .',
+    drums: 'c . . . k . . . . . s . . . . . | ' +
+          'k . . . . . s . . . k . . . . . | ' +
+          'k . . . . . s . . . k . . . . . | ' +
+          'k . . . s . . . . . s . . . k .',
+  },
+  // CAPPUCCINO - hot food, fast hands. The pizza theme.
+  pizza: {
+    name: 'CAPPUCCINO',
+    bpm: 142,
+    lead: 'E5 . G5 . C6 . G5 . E5 . . . C5 . . . | ' +
+          'D5 . F#5 . A5 . F#5 . D5 . . . B4 . . . | ' +
+          'E5 . G5 . C6 . G5 . E5 . . . G5 . . . | ' +
+          'F5 . A5 . C6 . A5 . F5 . . . . . . .',
+    bass: 'C3 C3 . G2 G2 . C3 C3 . E3 E3 . G2 G2 . . | ' +
+          'D3 D3 . A2 A2 . D3 D3 . F#3 F#3 . A2 A2 . . | ' +
+          'C3 C3 . G2 G2 . C3 C3 . E3 E3 . G2 G2 . . | ' +
+          'F3 F3 . C3 C3 . G2 G2 . C3 C3 . G2 G2 . .',
+    drums: 'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k . h . s . h h | ' +
+          'k . h . s . h . k . h . s . h h | ' +
+          'k k h . s . h . k k s . s . h h',
+  },
   // SOUL SOCIETY - the calm of the afterlife. The hub theme.
   hub: {
     name: 'SOUL SOCIETY',

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>PIZZA RUSH — Game with Bro</title>
+<link rel="stylesheet" href="css/game.css?v=3" />
+<link rel="stylesheet" href="css/controls.css?v=3" />
+</head>
+<body>
+
+<div id="app">
+  <header id="gbar">
+    <a class="backbtn" id="btn-hub" href="index.html">◀ HUB</a>
+    <div class="gtitle">PIZZA <span>RUSH</span></div>
+    <div class="gbar-right">
+      <button id="btn-help" class="iconbtn" title="How to play (F1)">?</button>
+      <button id="btn-controls" class="ctlbtn" title="Controls &amp; music (F2)"><span class="gear">⚙</span>CONTROLS</button>
+      <button id="btn-sound" class="iconbtn" title="Sound (M)">🔊</button>
+    </div>
+  </header>
+
+  <main id="stage">
+    <div id="gframe">
+      <canvas id="game"></canvas>
+
+      <div id="hint" class="hint">
+        <span id="hinttext"><b>P1</b> A/D pick topping · W add · S bake &amp; serve &nbsp;·&nbsp;
+        <b>P2</b> ←/→ pick topping · ↑ add · ↓ bake &amp; serve &nbsp;·&nbsp; match the ticket, then serve before they walk out</span>
+      </div>
+
+      <!-- help -->
+      <div id="overlay-help" class="overlay hidden">
+        <div class="panel">
+          <h1>HOW TO <span>SLICE</span></h1>
+          <div class="howto">
+            <div class="hcol">
+              <h3>Player 1</h3>
+              <ul>
+                <li><span class="kbd">A</span> <span class="kbd">D</span> — pick a topping from the bins</li>
+                <li><span class="kbd">W</span> — put that topping on the dough (press again to take it off)</li>
+                <li><span class="kbd">S</span> — put it in the oven, then press again when it is ready</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Player 2</h3>
+              <ul>
+                <li><span class="kbd">←</span> <span class="kbd">→</span> — pick a topping</li>
+                <li><span class="kbd">↑</span> — add or remove that topping</li>
+                <li><span class="kbd">↓</span> — bake, then serve</li>
+              </ul>
+            </div>
+          </div>
+          <div class="howto">
+            <div class="hcol">
+              <h3>How a ticket works</h3>
+              <ul>
+                <li>The paper by the window shows the toppings they asked for.</li>
+                <li>Add exactly those, bake it, and take it out when the oven says READY.</li>
+                <li>The tip grows the faster you serve them. Consecutive good pizzas build a combo.</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Rules</h3>
+              <ul>
+                <li>A 75 second shift. Most tips wins.</li>
+                <li>Wrong pizza: no tip, no combo, and they lose patience.</li>
+                <li>Walk out: no tip, no combo, and a new customer immediately.</li>
+                <li>Want different keys? Hit <b>⚙</b> (<span class="kbd">F2</span>) and rebind both players.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="startrow center">
+            <button id="btn-close-help" class="bigbtn">OPEN UP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/games/pizza.js?v=3"></script>
+
+<script>
+// If a script on this page dies, say so out loud instead of failing quietly.
+function broShowError(msg) {
+  var bar = document.getElementById('errbar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'errbar';
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;'
+      + 'background:#7a1020;color:#fff;font:12px/1.45 monospace;padding:8px 12px;'
+      + 'white-space:pre-wrap;box-shadow:0 -3px 0 rgba(0,0,0,.5);';
+    (document.body || document.documentElement).appendChild(bar);
+  }
+  bar.textContent = '\u26A0 ' + msg;
+}
+window.addEventListener('error', function (e) {
+  if (e.target && e.target !== window) {
+    if (!/script/i.test(e.target.tagName || '')) return;   // a missing image, not fatal
+    broShowError('could not load ' + (e.target.src || e.target.href || 'a script'));
+    return;
+  }
+  broShowError((e.message || 'unknown error') + (e.filename ? '  (' + e.filename.split('/').pop() + ')' : ''));
+}, true);
+window.addEventListener('unhandledrejection', function (e) {
+  var r = e.reason;
+  broShowError('promise error: ' + ((r && r.message) || r || 'unknown'));
+});
+</script>
+</body>
+</html>

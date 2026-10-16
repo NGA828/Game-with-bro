@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>BRO DUNGEON — Game with Bro</title>
+<link rel="stylesheet" href="css/game.css?v=3" />
+<link rel="stylesheet" href="css/controls.css?v=3" />
+</head>
+<body>
+
+<div id="app">
+  <header id="gbar">
+    <a class="backbtn" id="btn-hub" href="index.html">◀ HUB</a>
+    <div class="gtitle">BRO <span>DUNGEON</span></div>
+    <div class="gbar-right">
+      <button id="btn-help" class="iconbtn" title="How to play (F1)">?</button>
+      <button id="btn-controls" class="ctlbtn" title="Controls &amp; music (F2)"><span class="gear">⚙</span>CONTROLS</button>
+      <button id="btn-sound" class="iconbtn" title="Sound (M)">🔊</button>
+    </div>
+  </header>
+
+  <main id="stage">
+    <div id="gframe">
+      <canvas id="game"></canvas>
+
+      <div id="hint" class="hint">
+        <span id="hinttext"><b>P1</b> A/D/W/S move · F sword · G dash &nbsp;·&nbsp;
+        <b>P2</b> ←/→/↑/↓ move · J sword · K dash &nbsp;·&nbsp; clear the room, then walk through the open door</span>
+      </div>
+
+      <!-- help -->
+      <div id="overlay-help" class="overlay hidden">
+        <div class="panel">
+          <h1>HOW TO <span>DESCEND</span></h1>
+          <div class="howto">
+            <div class="hcol">
+              <h3>Player 1</h3>
+              <ul>
+                <li><span class="kbd">A</span> <span class="kbd">W</span> <span class="kbd">S</span> <span class="kbd">D</span> — move</li>
+                <li><span class="kbd">F</span> — swing the sword (the arc in front of you)</li>
+                <li><span class="kbd">G</span> — dash (short burst, brief invulnerability)</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Player 2</h3>
+              <ul>
+                <li><span class="kbd">←</span> <span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">→</span> — move</li>
+                <li><span class="kbd">J</span> — swing the sword</li>
+                <li><span class="kbd">K</span> — dash</li>
+              </ul>
+            </div>
+          </div>
+          <div class="howto">
+            <div class="hcol">
+              <h3>What is down there</h3>
+              <ul>
+                <li><b>Skeletons</b> walk straight at you. <b>Bats</b> are fast and dopey.</li>
+                <li><b>Ghosts</b> drift through the walls. Swing at the room, not at them.</li>
+                <li>The last room has something the size of the fridge. Bring swords.</li>
+                <li>Coins are the score. Hearts heal two points. Blue orbs shield you.</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Rules</h3>
+              <ul>
+                <li>Co-op: two heroes, eight rooms, one dungeon.</li>
+                <li>Clear every monster and the door on the right unlocks.</li>
+                <li>You can walk back through the door you came in by.</li>
+                <li>Want different keys? Hit <b>⚙</b> (<span class="kbd">F2</span>) and rebind both players.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="startrow center">
+            <button id="btn-close-help" class="bigbtn">DESCEND</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/games/dungeon.js?v=3"></script>
+
+<script>
+// If a script on this page dies, say so out loud instead of failing quietly.
+function broShowError(msg) {
+  var bar = document.getElementById('errbar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'errbar';
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;'
+      + 'background:#7a1020;color:#fff;font:12px/1.45 monospace;padding:8px 12px;'
+      + 'white-space:pre-wrap;box-shadow:0 -3px 0 rgba(0,0,0,.5);';
+    (document.body || document.documentElement).appendChild(bar);
+  }
+  bar.textContent = '\u26A0 ' + msg;
+}
+window.addEventListener('error', function (e) {
+  if (e.target && e.target !== window) {
+    if (!/script/i.test(e.target.tagName || '')) return;   // a missing image, not fatal
+    broShowError('could not load ' + (e.target.src || e.target.href || 'a script'));
+    return;
+  }
+  broShowError((e.message || 'unknown error') + (e.filename ? '  (' + e.filename.split('/').pop() + ')' : ''));
+}, true);
+window.addEventListener('unhandledrejection', function (e) {
+  var r = e.reason;
+  broShowError('promise error: ' + ((r && r.message) || r || 'unknown'));
+});
+</script>
+</body>
+</html>

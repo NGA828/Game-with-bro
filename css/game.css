@@ -1,0 +1,158 @@
+/* Shared chrome for the new games in the hub (HERO CLASH / TURBO BROS / DUCK INVADERS).
+   The artillery game keeps its own stylesheet in css/style.css. */
+
+:root{
+  --p1:#ff8a3d;
+  --p2:#45c8ff;
+  --gold:#ffd166;
+  --ink:#0b0d17;
+  --panel:#151a2e;
+  --font: "Comic Sans MS", "Chalkboard SE", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0; padding:0; height:100%;
+  background: radial-gradient(circle at 50% 0%, #1b2145 0%, #0a0c18 60%, #05060d 100%);
+  color:#fff; font-family:var(--font);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+#app{ height:100%; display:flex; flex-direction:column; }
+
+/* ---------- top bar ---------- */
+#gbar{
+  flex:0 0 auto;
+  display:flex; align-items:center; gap:12px;
+  padding:8px 14px;
+  background:linear-gradient(#1d2340,#141830);
+  border-bottom:3px solid #000;
+  box-shadow:0 4px 0 rgba(0,0,0,.45);
+  z-index:5;
+}
+.backbtn{
+  font-family:var(--font); font-size:13px; font-weight:700;
+  text-decoration:none; color:#fff;
+  background:#2a3157; border:2px solid #000; border-radius:9px;
+  padding:6px 12px; box-shadow:0 3px 0 #000;
+  transition:transform .06s, background .15s;
+  white-space:nowrap;
+}
+.backbtn:hover{ background:#3a4477; }
+.backbtn:active{ transform:translateY(3px); box-shadow:none; }
+.gtitle{
+  font-size:19px; font-weight:700; letter-spacing:1.5px; line-height:1;
+  color:var(--gold); text-shadow:2px 2px 0 #000;
+  flex:1 1 auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.gtitle span{ color:var(--p1); }
+.gbar-right{ display:flex; align-items:center; gap:8px; }
+.iconbtn{
+  font-family:var(--font);
+  width:34px; height:32px; font-size:16px; cursor:pointer;
+  background:#242c4d; color:#fff; border:2px solid #000; border-radius:9px;
+  box-shadow:0 3px 0 #000; transition:transform .06s, background .15s;
+}
+.iconbtn:hover{ background:#323d6b; }
+.iconbtn:active{ transform:translateY(3px); box-shadow:none; }
+
+/* ---------- stage ---------- */
+#stage{
+  flex:1 1 auto; min-height:0;
+  display:flex; align-items:center; justify-content:center;
+  padding:10px;
+}
+#gframe{
+  position:relative;
+  width:100%;
+  max-width:calc((100dvh - 100px) * 16 / 9);
+  aspect-ratio:16/9;
+  border:3px solid #000; border-radius:14px; overflow:hidden;
+  box-shadow:0 12px 0 rgba(0,0,0,.5), 0 0 60px rgba(80,120,255,.15);
+  background:#0a0e20;
+}
+#game{ position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+#game.cursor-cross{ cursor:crosshair; }
+#game.cursor-default{ cursor:default; }
+
+/* ---------- overlays ---------- */
+.overlay{
+  position:absolute; inset:0; z-index:10;
+  display:flex; align-items:center; justify-content:center;
+  padding:16px;
+  background:rgba(5,7,16,.82);
+  backdrop-filter: blur(3px);
+  overflow:auto;
+}
+.overlay.hidden{ display:none; }
+
+.panel{
+  width:min(760px, 100%);
+  background:linear-gradient(#1b2140,#131830);
+  border:3px solid #000; border-radius:16px;
+  box-shadow:0 10px 0 rgba(0,0,0,.5), inset 0 0 40px rgba(90,130,255,.08);
+  padding:20px 24px;
+  text-align:center;
+}
+.panel h1{
+  margin:0 0 6px; font-size:30px; letter-spacing:2px;
+  color:var(--gold); text-shadow:2px 2px 0 #000;
+}
+.panel h1 span{ color:var(--p1); }
+.panel h3{ margin:0 0 8px; font-size:15px; letter-spacing:1px; color:var(--gold); }
+.panel p{ margin:0 0 12px; font-size:14px; opacity:.85; line-height:1.5; }
+
+.howto{ display:flex; gap:22px; text-align:left; margin:14px 0; }
+.hcol{ flex:1 1 0; min-width:0; }
+.hcol ul{ margin:0; padding-left:18px; }
+.hcol li{ font-size:13px; line-height:1.75; opacity:.92; }
+.hcol b{ color:var(--gold); }
+.hcol .kbd{
+  display:inline-block; padding:0 6px; border-radius:5px;
+  background:#0d1226; border:1px solid #3a4477; border-bottom-width:2px;
+  font-size:12px; color:#fff;
+}
+.p1c{ color:var(--p1); font-weight:700; }
+.p2c{ color:var(--p2); font-weight:700; }
+
+.startrow{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap; }
+.startrow.center{ justify-content:center; }
+.check{ font-size:13px; opacity:.9; display:flex; align-items:center; gap:6px; cursor:pointer; }
+.check input{ width:16px; height:16px; accent-color:var(--p1); }
+
+.bigbtn{
+  font-family:var(--font); font-size:18px; font-weight:700; letter-spacing:1px;
+  color:#12121a; background:linear-gradient(#ffd97a,#ff9f43);
+  border:3px solid #000; border-radius:12px;
+  padding:12px 26px; cursor:pointer;
+  box-shadow:0 5px 0 #000, 0 0 26px rgba(255,160,60,.35);
+  transition:transform .07s, filter .15s;
+}
+.bigbtn:hover{ filter:brightness(1.08); }
+.bigbtn:active{ transform:translateY(5px); box-shadow:0 0 0 #000; }
+.bigbtn.ghost{
+  background:linear-gradient(#2a3157,#1d2340); color:#fff;
+  box-shadow:0 5px 0 #000; font-size:15px; padding:10px 20px;
+}
+.bigbtn.ghost:hover{ background:linear-gradient(#39437a,#262d52); }
+
+/* ---------- results ---------- */
+.winstats{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:12px 0 4px; }
+.statbox{
+  background:#0d1226; border:2px solid #000; border-radius:10px;
+  padding:8px 14px; min-width:96px;
+}
+.statbox .sv{ font-size:20px; font-weight:700; color:var(--gold); }
+.statbox .sl{ font-size:10px; letter-spacing:1.5px; opacity:.7; margin-top:2px; }
+.win.p1{ color:var(--p1); }
+.win.p2{ color:var(--p2); }
+
+.hint{
+  position:absolute; left:0; right:0; bottom:6px;
+  text-align:center; font-size:11.5px; letter-spacing:.4px;
+  color:#fff; opacity:.55; pointer-events:none; z-index:4;
+  text-shadow:0 1px 3px #000;
+}
+.hint b{ color:var(--gold); }

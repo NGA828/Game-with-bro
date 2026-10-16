@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>HERO CLASH — Game with Bro</title>
+<link rel="stylesheet" href="css/game.css" />
+<link rel="stylesheet" href="css/controls.css" />
+</head>
+<body>
+
+<div id="app">
+  <header id="gbar">
+    <a class="backbtn" href="index.html">◀ HUB</a>
+    <div class="gtitle">HERO <span>CLASH</span></div>
+    <div class="gbar-right">
+      <button id="btn-help" class="iconbtn" title="How to play (F1)">?</button>
+      <button id="btn-controls" class="iconbtn" title="Controls &amp; music (C)">⚙</button>
+      <button id="btn-sound" class="iconbtn" title="Sound (M)">🔊</button>
+    </div>
+  </header>
+
+  <main id="stage">
+    <div id="gframe">
+      <canvas id="game"></canvas>
+
+      <div id="hint" class="hint">
+        <b>P1</b> W A S D move · F light · G heavy · H special · T super &nbsp;·&nbsp;
+        <b>P2</b> ← ↑ → ↓ move · J light · K heavy · L special · I super
+      </div>
+
+      <!-- help -->
+      <div id="overlay-help" class="overlay hidden">
+        <div class="panel">
+          <h1>HOW TO <span>CLASH</span></h1>
+          <div class="howto">
+            <div class="hcol">
+              <h3>Team Letters (P1)</h3>
+              <ul>
+                <li><span class="kbd">A</span> <span class="kbd">D</span> — walk</li>
+                <li><span class="kbd">W</span> — jump &nbsp;·&nbsp; <span class="kbd">S</span> — crouch</li>
+                <li><span class="kbd">F</span> light · <span class="kbd">G</span> heavy</li>
+                <li><span class="kbd">H</span> special (needs meter) · <span class="kbd">T</span> SUPER at 100%</li>
+                <li>Hold <b>back</b> to block. Crouching blocks low hits, standing blocks high ones.</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Team Numbers (P2)</h3>
+              <ul>
+                <li><span class="kbd">←</span> <span class="kbd">→</span> — walk</li>
+                <li><span class="kbd">↑</span> — jump &nbsp;·&nbsp; <span class="kbd">↓</span> — crouch</li>
+                <li><span class="kbd">J</span> light · <span class="kbd">K</span> heavy</li>
+                <li><span class="kbd">L</span> special · <span class="kbd">I</span> super</li>
+                <li>Gamepads work: stick to steer, <b>X</b> light, <b>Y</b> heavy, <b>B</b> special, <b>A</b> super.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="howto">
+            <div class="hcol">
+              <h3>How a round works</h3>
+              <ul>
+                <li>Best of three. 1000 HP, 60 seconds on the clock.</li>
+                <li>Meter builds when you hit <i>and</i> when you get hit.</li>
+                <li>Low hits beat a standing hero. High hits beat a crouching one.</li>
+                <li>Time out? Whoever has more health wins the round.</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>On the select screen</h3>
+              <ul>
+                <li><span class="kbd">W A S D</span> + <span class="kbd">F</span> — P1 picks a hero</li>
+                <li><span class="kbd">↑ ↓ ← →</span> + <span class="kbd">J</span> — P2 picks a hero</li>
+                <li><span class="kbd">C</span> — VS CPU on/off &nbsp;·&nbsp; <span class="kbd">V</span> — difficulty</li>
+                <li><span class="kbd">F1</span> — this help &nbsp;·&nbsp; <span class="kbd">Esc</span> — back to the hub</li>
+                <li>Prefer other keys? Hit <b>⚙</b> (<span class="kbd">F2</span>) and rebind Player One and Player Two.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="startrow center">
+            <button id="btn-close-help" class="bigbtn">FIGHT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- result -->
+      <div id="overlay-result" class="overlay hidden">
+        <div class="panel">
+          <h1 id="result-title" class="title">HERO WINS</h1>
+          <p id="result-sub" class="tagline"></p>
+          <div id="result-stats" class="winstats"></div>
+          <div class="startrow center">
+            <button id="btn-rematch" class="bigbtn">REMATCH ⚔️</button>
+            <button id="btn-hub" class="bigbtn ghost">BACK TO HUB</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/games/fighter.js"></script>
+</body>
+</html>

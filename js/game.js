@@ -6,6 +6,7 @@ import { Particles } from './particles.js';
 import { WEAPONS, weaponById } from './weapons.js';
 import { clamp, rand, randInt, pick, roundRect, rgba } from './utils.js';
 import * as Sfx from './audio.js';
+import { getKeys } from './shared/config.js';
 
 export const W = 960;
 export const H = 540;
@@ -329,10 +330,13 @@ export class Game {
     const inp = this.input;
     if (!inp) return;
 
+    // the keys of whoever is shooting right now
+    const bind = getKeys('artillery', this.turn);
+
     // ---- driving
     let move = 0;
-    if (inp.isDown('KeyA') || inp.isDown('ArrowLeft')) move -= 1;
-    if (inp.isDown('KeyD') || inp.isDown('ArrowRight')) move += 1;
+    if (inp.anyDown(...(bind.left || []))) move -= 1;
+    if (inp.anyDown(...(bind.right || []))) move += 1;
     if (move !== 0 && t.fuel > 0) {
       const sp = 44;
       const step = Math.min(t.fuel, sp * dt);
@@ -350,8 +354,8 @@ export class Game {
 
     // ---- aiming: mouse by default, W/S takes over until the mouse moves again
     const fine = dt * 58;
-    if (inp.isDown('KeyW') || inp.isDown('ArrowUp')) { t.angle = clamp(t.angle + fine, 0, 180); this.angleByKeyboard = true; }
-    if (inp.isDown('KeyS') || inp.isDown('ArrowDown')) { t.angle = clamp(t.angle - fine, 0, 180); this.angleByKeyboard = true; }
+    if (inp.anyDown(...(bind.aimUp || []))) { t.angle = clamp(t.angle + fine, 0, 180); this.angleByKeyboard = true; }
+    if (inp.anyDown(...(bind.aimDown || []))) { t.angle = clamp(t.angle - fine, 0, 180); this.angleByKeyboard = true; }
     if (inp.pointer.moved) this.angleByKeyboard = false;
 
     if (!this.angleByKeyboard && inp.pointer.inside) {
@@ -367,14 +371,15 @@ export class Game {
     }
 
     // ---- weapon select
-    for (let i = 0; i < WEAPONS.length; i++) {
-      if (inp.consume('Digit' + (i + 1))) this.selectWeapon(WEAPONS[i].id);
+    const weaponKeys = bind.weapon || [];
+    for (let i = 0; i < WEAPONS.length && i < weaponKeys.length; i++) {
+      if (inp.consume(weaponKeys[i])) this.selectWeapon(WEAPONS[i].id);
     }
-    if (inp.consume('KeyQ')) this.cycleWeapon(-1);
-    if (inp.consume('KeyE')) this.cycleWeapon(1);
+    if (inp.consumeAny(...(bind.weaponPrev || []))) this.cycleWeapon(-1);
+    if (inp.consumeAny(...(bind.weaponNext || []))) this.cycleWeapon(1);
 
     // ---- charge & fire
-    const wantCharge = inp.pointer.down || inp.isDown('Space');
+    const wantCharge = inp.pointer.down || inp.anyDown(...(bind.fire || []));
     if (wantCharge) {
       if (!t.charging) {
         t.charging = true;

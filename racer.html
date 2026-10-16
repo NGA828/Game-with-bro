@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>TURBO BROS — Game with Bro</title>
+<link rel="stylesheet" href="css/game.css" />
+<link rel="stylesheet" href="css/controls.css" />
+</head>
+<body>
+
+<div id="app">
+  <header id="gbar">
+    <a class="backbtn" href="index.html">◀ HUB</a>
+    <div class="gtitle">TURBO <span>BROS</span></div>
+    <div class="gbar-right">
+      <button id="btn-restart" class="iconbtn" title="Restart race (R)">⟳</button>
+      <button id="btn-help" class="iconbtn" title="How to play (F1)">?</button>
+      <button id="btn-controls" class="iconbtn" title="Controls &amp; music (C)">⚙</button>
+      <button id="btn-sound" class="iconbtn" title="Sound (M)">🔊</button>
+    </div>
+  </header>
+
+  <main id="stage">
+    <div id="gframe">
+      <canvas id="game"></canvas>
+
+      <div id="hint" class="hint">
+        <b>P1</b> W/S/A/D drive · SPACE handbrake · LSHIFT nitro &nbsp;·&nbsp;
+        <b>P2</b> ↑/↓/←/→ drive · SLASH handbrake · RSHIFT nitro &nbsp;·&nbsp; gamepads work too
+      </div>
+
+      <!-- help -->
+      <div id="overlay-help" class="overlay hidden">
+        <div class="panel">
+          <h1>HOW TO <span>DRIVE</span></h1>
+          <div class="howto">
+            <div class="hcol">
+              <h3>Team Orange (P1)</h3>
+              <ul>
+                <li><span class="kbd">W</span> accelerate · <span class="kbd">S</span> brake / reverse</li>
+                <li><span class="kbd">A</span> <span class="kbd">D</span> steer</li>
+                <li><span class="kbd">SPACE</span> handbrake (drift!)</li>
+                <li><span class="kbd">LSHIFT</span> nitro</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Team Blue (P2)</h3>
+              <ul>
+                <li><span class="kbd">↑</span> accelerate · <span class="kbd">↓</span> brake / reverse</li>
+                <li><span class="kbd">←</span> <span class="kbd">→</span> steer</li>
+                <li><span class="kbd">/</span> handbrake</li>
+                <li><span class="kbd">RSHIFT</span> nitro</li>
+              </ul>
+            </div>
+          </div>
+          <div class="howto">
+            <div class="hcol">
+              <h3>Race rules</h3>
+              <ul>
+                <li>Three laps, four cars, one screen.</li>
+                <li>Split screen when two bros play. Press <b>C</b> on the track screen for a solo race against the CPUs.</li>
+                <li>Hit the glowing pads for free speed.</li>
+                <li>The grass is slow. The barrier is slower.</li>
+              </ul>
+            </div>
+            <div class="hcol">
+              <h3>Gamepads</h3>
+              <ul>
+                <li>Left stick — steer</li>
+                <li><b>RT</b> — accelerate · <b>LT</b> — brake</li>
+                <li><b>A</b> — handbrake · <b>RB</b> — nitro</li>
+                <li>Plug in two pads and the bro you pass will feel it.</li>
+                <li>Keyboard keys can be changed any time — hit <b>⚙</b> (<span class="kbd">F2</span>).</li>
+              </ul>
+            </div>
+          </div>
+          <div class="startrow center">
+            <button id="btn-close-help" class="bigbtn">LET'S RACE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- result -->
+      <div id="overlay-result" class="overlay hidden">
+        <div class="panel">
+          <h1 id="result-title" class="title">RACE OVER</h1>
+          <p id="result-sub" class="tagline"></p>
+          <div id="result-stats" class="winstats"></div>
+          <div class="startrow center">
+            <button id="btn-rematch" class="bigbtn">RACE AGAIN 🏁</button>
+            <button id="btn-change-track" class="bigbtn ghost">CHANGE TRACK</button>
+            <button id="btn-hub" class="bigbtn ghost">BACK TO HUB</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="js/games/racer.js"></script>
+</body>
+</html>

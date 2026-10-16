@@ -172,7 +172,13 @@ a.card:hover .cardgo{ background:color-mix(in srgb, var(--a1) 20%, #0b0e1e); let
 .pickerrow .browsebtn{ margin-top:0; }
 .browsebtn:active{ transform:translateY(3px); box-shadow:none; }
 
+.pickerrow .gearbtn{
+  background:#ffd166; color:#12152b; font-weight:700;
+  box-shadow:0 3px 0 #000, 0 0 18px rgba(255,209,102,.35);
+}
+.pickerrow .gearbtn:hover{ background:#ffe08a; }
+
 @media (max-width:520px){
   .tagline{ display:none; }
-  .picker{ padding:14px; }
+  .picker{ padding:72px 14px 14px; }
 }

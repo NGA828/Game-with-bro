@@ -5,6 +5,11 @@ import { initControlsButton, openControls } from './shared/controls.js';
 import { startMusic } from './shared/music.js';
 import { musicEnabled } from './shared/config.js';
 
+// Wire the gear buttons before anything else, so the settings panel is
+// reachable even if something below trips over while the hub boots.
+initControlsButton('btn-controls', null);
+initControlsButton('btn-picker-controls', null);
+
 const GAMES = [
   {
     id: 'artillery',
@@ -151,10 +156,6 @@ soundBtn.addEventListener('click', () => {
   toggleSound();
 });
 
-// ------------------------------------------------------------- controls
-initControlsButton(document.getElementById('btn-controls'), null);
-initControlsButton(document.getElementById('btn-picker-controls'), null);
-
 // ------------------------------------------------------------- music
 if (musicEnabled()) startMusic('hub');
 
@@ -190,7 +191,7 @@ openPicker();
 // open the controls panel with the C key
 document.addEventListener('keydown', (e) => {
   const inPanel = e.target && e.target.closest && e.target.closest('.cfgpanel');
-  if (e.code === 'KeyC' && !inPanel) {
+  if ((e.code === 'KeyC' || e.code === 'F2') && !inPanel) {
     e.preventDefault();
     openControls(null);
   }

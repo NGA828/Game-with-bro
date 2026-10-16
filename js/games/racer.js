@@ -11,6 +11,10 @@ import { getKeys, onChange, keyLabel, musicEnabled } from '../shared/config.js';
 import { initControlsButton, openControls } from '../shared/controls.js';
 import { startMusic } from '../shared/music.js';
 
+// Wire the gear button before anything else, so the settings panel is
+// reachable even if the game below trips over something while it boots.
+initControlsButton('btn-controls', 'racer');
+
 export const W = 960;
 export const H = 540;
 
@@ -1056,7 +1060,7 @@ function racerHint() {
 }
 
 function refreshHint() {
-  const hint = document.getElementById('hint');
+  const hint = document.getElementById('hinttext');
   if (hint) hint.innerHTML = racerHint();
 }
 refreshHint();
@@ -1107,8 +1111,7 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-// controls panel + background music
-initControlsButton(document.getElementById('btn-controls'), 'racer');
+// background music
 if (musicEnabled()) startMusic('racer');
 
 document.getElementById('btn-help').addEventListener('click', () => {

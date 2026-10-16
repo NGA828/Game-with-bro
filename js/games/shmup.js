@@ -11,6 +11,10 @@ import { getKeys, onChange, keyLabel, musicEnabled } from '../shared/config.js';
 import { initControlsButton, openControls } from '../shared/controls.js';
 import { startMusic } from '../shared/music.js';
 
+// Wire the gear button before anything else, so the settings panel is
+// reachable even if the game below trips over something while it boots.
+initControlsButton('btn-controls', 'shmup');
+
 export const W = 960;
 export const H = 540;
 
@@ -857,7 +861,7 @@ function shmupHint() {
 }
 
 function refreshHint() {
-  const hint = document.getElementById('hint');
+  const hint = document.getElementById('hinttext');
   if (hint) hint.innerHTML = shmupHint();
 }
 refreshHint();
@@ -897,8 +901,7 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-// controls panel + background music
-initControlsButton(document.getElementById('btn-controls'), 'shmup');
+// background music
 if (musicEnabled()) startMusic('shmup');
 
 document.getElementById('btn-help').addEventListener('click', () => {
@@ -916,9 +919,12 @@ document.getElementById('btn-sound').addEventListener('click', () => {
 document.getElementById('btn-restart').addEventListener('click', () => {
   shmup.start(players);
 });
-document.getElementById('btn-hub').addEventListener('click', () => {
-  window.location.href = 'index.html';
-});
+// the "◀ HUB" link is a real <a href>, this just makes it work the same
+// way as the button in the other two games
+const hubLink = document.getElementById('btn-hub');
+if (hubLink) {
+  hubLink.addEventListener('click', () => { window.location.href = 'index.html'; });
+}
 
 const STEP = 1 / 120;
 let acc = 0;

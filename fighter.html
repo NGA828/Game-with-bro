@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>HERO CLASH — Game with Bro</title>
-<link rel="stylesheet" href="css/game.css" />
-<link rel="stylesheet" href="css/controls.css" />
+<link rel="stylesheet" href="css/game.css?v=3" />
+<link rel="stylesheet" href="css/controls.css?v=3" />
 </head>
 <body>
 
@@ -15,7 +15,7 @@
     <div class="gtitle">HERO <span>CLASH</span></div>
     <div class="gbar-right">
       <button id="btn-help" class="iconbtn" title="How to play (F1)">?</button>
-      <button id="btn-controls" class="iconbtn" title="Controls &amp; music (F2)">⚙</button>
+      <button id="btn-controls" class="ctlbtn" title="Controls &amp; music (F2)"><span class="gear">⚙</span>CONTROLS</button>
       <button id="btn-sound" class="iconbtn" title="Sound (M)">🔊</button>
     </div>
   </header>
@@ -25,8 +25,8 @@
       <canvas id="game"></canvas>
 
       <div id="hint" class="hint">
-        <b>P1</b> W A S D move · F light · G heavy · H special · T super &nbsp;·&nbsp;
-        <b>P2</b> ← ↑ → ↓ move · J light · K heavy · L special · I super
+        <span id="hinttext"><b>P1</b> W A S D move · F light · G heavy · H special · T super &nbsp;·&nbsp;
+        <b>P2</b> ← ↑ → ↓ move · J light · K heavy · L special · I super</span>
       </div>
 
       <!-- help -->
@@ -98,6 +98,34 @@
   </main>
 </div>
 
-<script type="module" src="js/games/fighter.js"></script>
+<script type="module" src="js/games/fighter.js?v=3"></script>
+
+<script>
+// If a script on this page dies, say so out loud instead of failing quietly.
+function broShowError(msg) {
+  var bar = document.getElementById('errbar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'errbar';
+    bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:99999;'
+      + 'background:#7a1020;color:#fff;font:12px/1.45 monospace;padding:8px 12px;'
+      + 'white-space:pre-wrap;box-shadow:0 -3px 0 rgba(0,0,0,.5);';
+    (document.body || document.documentElement).appendChild(bar);
+  }
+  bar.textContent = '\u26A0 ' + msg;
+}
+window.addEventListener('error', function (e) {
+  if (e.target && e.target !== window) {
+    if (!/script/i.test(e.target.tagName || '')) return;   // a missing image, not fatal
+    broShowError('could not load ' + (e.target.src || e.target.href || 'a script'));
+    return;
+  }
+  broShowError((e.message || 'unknown error') + (e.filename ? '  (' + e.filename.split('/').pop() + ')' : ''));
+}, true);
+window.addEventListener('unhandledrejection', function (e) {
+  var r = e.reason;
+  broShowError('promise error: ' + ((r && r.message) || r || 'unknown'));
+});
+</script>
 </body>
 </html>

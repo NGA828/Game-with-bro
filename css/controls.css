@@ -133,3 +133,18 @@
 .cfgtoast.bad{ background:#2a1414; color:#ff8a3d; }
 
 body.cfg-locked{ overflow:hidden; }
+
+/* ---------- the bar button that opens this panel ---------- */
+.ctlbtn{
+  font-family:var(--font, "Comic Sans MS", system-ui, sans-serif);
+  display:flex; align-items:center; gap:7px;
+  font-size:12px; font-weight:700; letter-spacing:1.2px;
+  padding:8px 13px; cursor:pointer; white-space:nowrap;
+  background:#ffd166; color:#12152b;
+  border:2px solid #000; border-radius:10px; box-shadow:0 3px 0 #000;
+  transition:transform .06s, background .15s;
+}
+.ctlbtn:hover{ background:#ffe08a; }
+.ctlbtn:active{ transform:translateY(3px); box-shadow:none; }
+.ctlbtn .gear{ font-size:15px; line-height:1; }
+

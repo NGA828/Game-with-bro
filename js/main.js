@@ -9,6 +9,10 @@ import { getKeys, onChange, keyLabel, musicEnabled } from './shared/config.js';
 import { initControlsButton, openControls } from './shared/controls.js';
 import { startMusic } from './shared/music.js';
 
+// Wire the gear button before anything else, so the settings panel is
+// reachable even if the game below trips over something while it boots.
+initControlsButton('btn-controls', 'artillery');
+
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', { alpha: false });
 
@@ -268,7 +272,6 @@ el.soundBtn.addEventListener('click', () => {
 });
 
 // controls panel + background music
-initControlsButton(el.controlsBtn, 'artillery');
 if (musicEnabled()) startMusic('artillery');
 
 function artilleryHint() {
@@ -278,7 +281,7 @@ function artilleryHint() {
     + `<b>FIRE</b> hold click or ${k('fire')}, release &nbsp;·&nbsp; <b>WEAPON</b> 1–5 or ${k('weaponPrev')}/${k('weaponNext')} &nbsp;·&nbsp; <b>HELP</b> H`;
 }
 function refreshHint() {
-  const hint = document.getElementById('hint');
+  const hint = document.getElementById('hinttext');
   if (hint) hint.innerHTML = artilleryHint();
 }
 refreshHint();

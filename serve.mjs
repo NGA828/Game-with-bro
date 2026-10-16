@@ -46,10 +46,16 @@ const server = createServer(async (req, res) => {
     }
 
     const body = await readFile(filePath);
+    const ext = extname(filePath).toLowerCase();
+    // code and html must never be served stale, or a fix will look like it
+    // "did not work" in the browser
+    const cache = ext === '.html' || ext === '.js' || ext === '.mjs' || ext === '.css'
+      ? 'no-store, must-revalidate'
+      : 'no-cache';
     res.writeHead(200, {
-      'Content-Type': TYPES[extname(filePath).toLowerCase()] || 'application/octet-stream',
+      'Content-Type': TYPES[ext] || 'application/octet-stream',
       'Content-Length': body.length,
-      'Cache-Control': 'no-cache',
+      'Cache-Control': cache,
     });
     res.end(body);
   } catch (err) {

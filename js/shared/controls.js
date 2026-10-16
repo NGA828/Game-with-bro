@@ -153,6 +153,11 @@ function buildMusic() {
 function ensureOverlay() {
   if (overlay) return overlay;
   overlay = el('div', 'cfgoverlay hidden');
+  // The panel must show up even if a stylesheet fails to load, so the
+  // critical bits (fixed, full screen, on top) are set inline as well.
+  overlay.style.cssText =
+    'position:fixed;left:0;top:0;right:0;bottom:0;z-index:120;' +
+    'align-items:center;justify-content:center;display:none;';
   const panel = el('div', 'cfgpanel');
 
   const head = el('div', 'cfghead');
@@ -217,6 +222,7 @@ function refresh(gameId) {
 export function openControls(gameId = null) {
   ensureOverlay();
   overlay.classList.remove('hidden');
+  overlay.style.display = 'flex';
   document.body.classList.add('cfg-locked');
   refresh(gameId || Object.keys(GAMES)[0]);
 }
@@ -224,17 +230,35 @@ export function openControls(gameId = null) {
 export function closeControls() {
   if (!overlay) return;
   overlay.classList.add('hidden');
+  overlay.style.display = 'none';
   document.body.classList.remove('cfg-locked');
   disarm();
 }
 
 /** Wire a button so it opens the panel. */
 export function initControlsButton(button, gameId = null) {
-  if (!button) return;
-  button.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openControls(gameId);
-  });
+  const el2 = typeof button === 'string' ? document.getElementById(button) : button;
+  if (el2) {
+    el2.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openControls(gameId);
+    });
+    // F2 always works, even if the button itself is covered by something
+    el2.dataset.cfgGame = gameId || '';
+    return;
+  }
+  // the button is not in the DOM yet - look for it for a short while
+  let tries = 0;
+  const timer = setInterval(() => {
+    tries++;
+    const b = typeof button === 'string' ? document.getElementById(button) : button;
+    if (b) {
+      clearInterval(timer);
+      initControlsButton(b, gameId);
+    } else if (tries > 40) {
+      clearInterval(timer);
+    }
+  }, 50);
 }
 
 // ---------------------------------------------------------------- rebinding

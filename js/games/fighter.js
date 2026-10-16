@@ -15,6 +15,10 @@ import { initControlsButton, openControls } from '../shared/controls.js';
 import { startMusic, setMusicVolume } from '../shared/music.js';
 import { musicEnabled, musicVolume } from '../shared/config.js';
 
+// Wire the gear button before anything else, so the settings panel is
+// reachable even if the game below trips over something while it boots.
+initControlsButton('btn-controls', 'fighter');
+
 export const W = 960;
 export const H = 540;
 
@@ -2549,7 +2553,7 @@ function fighterHint() {
 }
 
 function refreshHint() {
-  const hint = document.getElementById('hint');
+  const hint = document.getElementById('hinttext');
   if (hint) hint.innerHTML = fighterHint();
 }
 refreshHint();
@@ -2638,8 +2642,7 @@ window.addEventListener('keydown', (e) => {
 });
 window.addEventListener('pointerdown', () => { Sfx.initAudio(); Sfx.resumeAudio(); }, { once: true });
 
-// controls panel + background music
-initControlsButton(document.getElementById('btn-controls'), 'fighter');
+// background music
 if (musicEnabled()) startMusic('fighter');
 
 const STEP = 1 / 120;

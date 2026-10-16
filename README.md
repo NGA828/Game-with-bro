@@ -204,7 +204,7 @@ js/weapons.js         the arsenal
 js/input.js           keyboard + pointer
 js/particles.js       sparks, smoke, dirt, floating text
 
-serve.mjs             dependency-free static server
+serve.mjs             dependency-free static server (with cache busting)
 tools/                headless test harnesses and the SVG recorder
 ```
 
@@ -221,6 +221,7 @@ node tools/scenario-racer.mjs   # TURBO BROS: physics, laps, AI, ranking
 node tools/scenario-shmup.mjs   # DUCK INVADERS: waves, boss, power-ups
 node tools/scenario-config.mjs  # the settings panel and the key bindings
 node tools/check-music.mjs      # the soundtrack: every track in sync
+node tools/scenario-stale-cache.mjs  # a stale module must not kill the page
 ```
 
 `tools/svg-canvas.mjs` is a Canvas2D → SVG recorder, so a frame of any game
@@ -229,6 +230,28 @@ can be dumped as an image for eyeballing the art:
 ```bash
 node tools/render-lineup.mjs && node tools/topng.mjs tools/out/lineup.svg tools/out/lineup.png 1440
 ```
+
+---
+
+## Why the server does a little bit of work
+
+`serve.mjs` is not just a file dumper. Two browsers (or one browser and one
+stale tab) can end up mixing a **new** `music.js` with an **old** `audio.js`,
+and ES modules then refuse to link:
+
+```
+Uncaught SyntaxError: The requested module '../audio.js' does not provide
+an export named 'audioContext'
+```
+
+So the server stamps every module URL with a content hash of the file it
+points at (`js/shared/music.js` → `../audio.js?v=9707aa78ec`). Change a file
+and its URL changes, which means the browser can never pair an old module
+with a new one. HTML pages get the same treatment for their CSS and JS.
+
+On top of that the engine modules ask for their dependencies defensively
+(`import * as Audio` plus a fallback), so even a mismatched browser cache
+degrades to *silent music* instead of a dead page.
 
 ---
 

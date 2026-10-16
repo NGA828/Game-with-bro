@@ -1,13 +1,21 @@
 // Background music - a tiny chiptune sequencer, no audio files.
 //
-//   import { startMusic, stopMusic } from './shared/music.js';
+//   import { startMusic, stopMusic } from 'js/shared/music.js';
 //   startMusic('fighter');
 //
 // Everything is synthesised with the same AudioContext the sound effects
 // use, so the M key and the 🔊 button mute the music too.
 
-import { initAudio, resumeAudio, audioContext, masterGain } from '../audio.js';
-import { musicVolume } from './config.js';
+import * as Audio from '../audio.js';
+import * as Config from './config.js';
+
+// These are asked for defensively. If a browser is still holding an older
+// copy of a module, a missing export should never take the whole page down.
+const initAudio = Audio.initAudio || (() => {});
+const resumeAudio = Audio.resumeAudio || (() => {});
+const audioContext = () => (Audio.audioContext ? Audio.audioContext() : null);
+const masterGain = () => (Audio.masterGain ? Audio.masterGain() : null);
+const musicVolume = Config.musicVolume || (() => 0.55);
 
 const SEMI = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
 const NOTE_RE = /^([A-G])(#|b)?(-?\d+)$/;
@@ -131,7 +139,8 @@ function musicGain() {
   if (!bus) {
     bus = ctx.createGain();
     bus.gain.value = 0.25;
-    bus.connect(masterGain());
+    const m = masterGain();
+    if (m) bus.connect(m);
   }
   return bus;
 }

@@ -1,6 +1,12 @@
 // The hub: builds the game cards, runs the first-load picker pop-up.
 
-import { initAudio, resumeAudio, sfxClick, sfxConfirm } from './audio.js';
+import * as Sfx from './audio.js';
+
+// Defensive again: a stale audio.js must not break the hub.
+const initAudio = Sfx.initAudio || (() => {});
+const resumeAudio = Sfx.resumeAudio || (() => {});
+const sfxClick = Sfx.sfxClick || (() => {});
+const sfxConfirm = Sfx.sfxConfirm || (() => {});
 import { initControlsButton, openControls } from './shared/controls.js';
 import { startMusic } from './shared/music.js';
 import { musicEnabled } from './shared/config.js';

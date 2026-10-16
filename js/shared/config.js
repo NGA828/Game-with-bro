@@ -103,6 +103,66 @@ export const GAMES = {
       },
     ],
   },
+  dungeon: {
+    name: 'BRO DUNGEON',
+    labels: {
+      light: 'Sword swing',
+      special: 'Dash',
+    },
+    players: [
+      {
+        label: 'Hero Red (P1)',
+        keys: {
+          left: ['KeyA'],
+          right: ['KeyD'],
+          up: ['KeyW'],
+          down: ['KeyS'],
+          light: ['KeyF'],
+          special: ['KeyG'],
+        },
+      },
+      {
+        label: 'Hero Blue (P2)',
+        keys: {
+          left: ['ArrowLeft'],
+          right: ['ArrowRight'],
+          up: ['ArrowUp'],
+          down: ['ArrowDown'],
+          light: ['KeyJ'],
+          special: ['KeyK'],
+        },
+      },
+    ],
+  },
+  pizza: {
+    name: 'PIZZA RUSH',
+    labels: {
+      left: 'Pick topping \u25c0',
+      right: 'Pick topping \u25b6',
+      up: 'Add topping',
+      down: 'Bake / serve',
+    },
+    players: [
+      {
+        label: 'Chef Orange (P1)',
+        keys: {
+          left: ['KeyA'],
+          right: ['KeyD'],
+          up: ['KeyW'],
+          down: ['KeyS'],
+        },
+      },
+      {
+        label: 'Chef Blue (P2)',
+        keys: {
+          left: ['ArrowLeft'],
+          right: ['ArrowRight'],
+          up: ['ArrowUp'],
+          down: ['ArrowDown'],
+        },
+      },
+    ],
+  },
   shmup: {
     name: 'DUCK INVADERS',
     players: [
@@ -253,6 +313,13 @@ export function getKey(gameId, player, action) {
 /** All actions of a game player, in a stable order. */
 export function actionsOf(gameId, player = 0) {
   return Object.keys(getKeys(gameId, player));
+}
+
+/** The label for one action - a game can override the generic wording. */
+export function actionLabel(gameId, action) {
+  const g = GAMES[gameId];
+  if (g && g.labels && g.labels[action]) return g.labels[action];
+  return ACTION_LABELS[action] || action;
 }
 
 export function gameName(gameId) {

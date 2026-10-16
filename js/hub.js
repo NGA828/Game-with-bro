@@ -48,6 +48,26 @@ const GAMES = [
     href: 'racer.html',
   },
   {
+    id: 'dungeon',
+    name: 'BRO DUNGEON',
+    blurb: 'A twin-stick crawl through eight rooms of haunted crypt. Skeletons, ghosts, loot, and something the size of the fridge.',
+    art: 'img/art-dungeon.jpg',
+    emoji: '🗡️',
+    tags: ['2P co-op', '8 rooms', 'NEW'],
+    accent: ['#9d7bff', '#4b2ea8'],
+    href: 'dungeon.html',
+  },
+  {
+    id: 'pizza',
+    name: 'PIZZA RUSH',
+    blurb: 'Two chefs, one kitchen, one oven. Build the pizza they ordered, bake it, and serve it before they walk out.',
+    art: 'img/art-pizza.jpg',
+    emoji: '🍕',
+    tags: ['2P versus', '75s shift', 'NEW'],
+    accent: ['#ff6b35', '#ffd166'],
+    href: 'pizza.html',
+  },
+  {
     id: 'shmup',
     name: 'DUCK INVADERS',
     blurb: 'The ducks are back and they are angry. Co-op vertical shooter: hold the line, share the lives, blame the other bro.',
@@ -61,16 +81,28 @@ const GAMES = [
 
 const SOON = [
   {
-    name: 'BRO DUNGEON',
-    blurb: 'Twin-stick dungeon crawl. Rooms, loot, skeletons, and a boss the size of the fridge.',
-    emoji: '🗡️',
-    accent: ['#9d7bff', '#4b2ea8'],
+    name: 'BRO SNAKE',
+    blurb: 'Two snakes, one board, and a corner that is definitely not a wall. Growing, biting, regretting.',
+    emoji: '🐍',
+    accent: ['#8de04a', '#2f7a32'],
   },
   {
-    name: 'PIZZA RUSH',
-    blurb: 'Time-management chaos. Take orders, burn the oven, yell at the queue — the ultimate two-player job.',
-    emoji: '🍕',
-    accent: ['#ff6b35', '#ffd166'],
+    name: 'BRO QUIZ',
+    blurb: 'Hot-seat trivia. Twenty questions, one winner, and at least one argument about the capital of Norway.',
+    emoji: '🧠',
+    accent: ['#45c8ff', '#7b61ff'],
+  },
+  {
+    name: 'BRO SOCCER',
+    blurb: 'Top-down one-a-side football on a tiny pitch. Two goals, ten minutes, and a keeper who cannot move.',
+    emoji: '⚽',
+    accent: ['#8de04a', '#1b7a3a'],
+  },
+  {
+    name: 'BRO BLOCKS',
+    blurb: 'Falling blocks, hot-seat. Stack them, clear the lines, and blame the bro who left a gap.',
+    emoji: '🧱',
+    accent: ['#7b61ff', '#ffd166'],
   },
 ];
 

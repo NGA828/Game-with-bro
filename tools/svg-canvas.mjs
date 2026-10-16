@@ -198,28 +198,43 @@ export class SvgCtx {
     return c;
   }
 
+  /** The alpha channel of a colour string (1 unless it is an rgba() with a < 1 alpha). */
+  _alpha(c) {
+    if (typeof c !== 'string') return 1;
+    const m = /rgba?\(([^)]+)\)/.exec(c);
+    if (!m) return 1;
+    const p = m[1].split(',').map((x) => parseFloat(x));
+    if (p.length < 4) return 1;
+    return isNaN(p[3]) ? 1 : p[3];
+  }
+
+  /** fill/stroke opacity: globalAlpha multiplied by the alpha of the colour itself. */
+  _opacity(c) {
+    return fmt(this.globalAlpha * this._alpha(c));
+  }
+
   fill() {
     const d = this._pathData();
     if (!d) return;
-    this._emit(`<path d="${d}" fill="${this._color(this.fillStyle)}" fill-opacity="${this.globalAlpha}" fill-rule="nonzero" transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
+    this._emit(`<path d="${d}" fill="${this._color(this.fillStyle)}" fill-opacity="${this._opacity(this.fillStyle)}" fill-rule="nonzero" transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
   }
   stroke() {
     const d = this._pathData();
     if (!d) return;
-    this._emit(`<path d="${d}" fill="none" stroke="${this._color(this.strokeStyle)}" stroke-width="${fmt(this.lineWidth)}" stroke-opacity="${this.globalAlpha}" stroke-linecap="${this.lineCap}" stroke-linejoin="${this.lineJoin}" ${this.dash && this.dash.length ? `stroke-dasharray="${this.dash.join(' ')}"` : ''} transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
+    this._emit(`<path d="${d}" fill="none" stroke="${this._color(this.strokeStyle)}" stroke-width="${fmt(this.lineWidth)}" stroke-opacity="${this._opacity(this.strokeStyle)}" stroke-linecap="${this.lineCap}" stroke-linejoin="${this.lineJoin}" ${this.dash && this.dash.length ? `stroke-dasharray="${this.dash.join(' ')}"` : ''} transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
   }
   fillRect(x, y, w, h) {
-    this._emit(`<rect x="${fmt(x)}" y="${fmt(y)}" width="${fmt(w)}" height="${fmt(h)}" fill="${this._color(this.fillStyle)}" fill-opacity="${this.globalAlpha}" transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
+    this._emit(`<rect x="${fmt(x)}" y="${fmt(y)}" width="${fmt(w)}" height="${fmt(h)}" fill="${this._color(this.fillStyle)}" fill-opacity="${this._opacity(this.fillStyle)}" transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
   }
   strokeRect(x, y, w, h) {
-    this._emit(`<rect x="${fmt(x)}" y="${fmt(y)}" width="${fmt(w)}" height="${fmt(h)}" fill="none" stroke="${this._color(this.strokeStyle)}" stroke-width="${fmt(this.lineWidth)}" stroke-opacity="${this.globalAlpha}" transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
+    this._emit(`<rect x="${fmt(x)}" y="${fmt(y)}" width="${fmt(w)}" height="${fmt(h)}" fill="none" stroke="${this._color(this.strokeStyle)}" stroke-width="${fmt(this.lineWidth)}" stroke-opacity="${this._opacity(this.strokeStyle)}" transform="matrix(${this.m.map(fmt).join(' ')})"/>`);
   }
   clearRect() {}
   fillText(text, x, y) {
     const size = /(\d+(?:\.\d+)?)px/.exec(this.font);
     const weight = /^\s*(\d{3})\s/.exec(this.font);
     const anchor = this.textAlign === 'center' ? 'middle' : this.textAlign === 'right' ? 'end' : 'start';
-    this._emit(`<text x="${fmt(x)}" y="${fmt(y)}" font-family="Comic Sans MS, DejaVu Sans, sans-serif" font-size="${size ? size[1] : 12}" ${weight ? `font-weight="${weight[1]}"` : ''} fill="${this._color(this.fillStyle)}" fill-opacity="${this.globalAlpha}" text-anchor="${anchor}" transform="matrix(${this.m.map(fmt).join(' ')})">${String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text>`);
+    this._emit(`<text x="${fmt(x)}" y="${fmt(y)}" font-family="Comic Sans MS, DejaVu Sans, sans-serif" font-size="${size ? size[1] : 12}" ${weight ? `font-weight="${weight[1]}"` : ''} fill="${this._color(this.fillStyle)}" fill-opacity="${this._opacity(this.fillStyle)}" text-anchor="${anchor}" transform="matrix(${this.m.map(fmt).join(' ')})">${String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text>`);
   }
   strokeText(text, x, y) {
     const size = /(\d+(?:\.\d+)?)px/.exec(this.font);

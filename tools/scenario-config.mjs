@@ -50,6 +50,12 @@ function makeEl(id) {
     getBoundingClientRect: () => ({ left: 0, top: 0, width: 960, height: 540 }),
     textContent: '', innerHTML: '', width: 960, height: 540,
   };
+  // a browser drops the children when innerHTML is reset
+  let _html = '';
+  Object.defineProperty(el, 'innerHTML', {
+    get() { return _html; },
+    set(v) { _html = String(v); if (_html === '') el.children.length = 0; },
+  });
   // className and classList have to agree, like in a real browser
   Object.defineProperty(el, 'className', {
     get() { return [...el.classList._s].join(' '); },

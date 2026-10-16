@@ -153,6 +153,7 @@ soundBtn.addEventListener('click', () => {
 
 // ------------------------------------------------------------- controls
 initControlsButton(document.getElementById('btn-controls'), null);
+initControlsButton(document.getElementById('btn-picker-controls'), null);
 
 // ------------------------------------------------------------- music
 if (musicEnabled()) startMusic('hub');

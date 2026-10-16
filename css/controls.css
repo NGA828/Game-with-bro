@@ -1,0 +1,155 @@
+/* The controls panel - shared by the hub and every game. */
+
+.cfgoverlay{
+  position:fixed; inset:0; z-index:120;
+  display:flex; align-items:center; justify-content:center;
+  padding:18px;
+  background:rgba(4,6,14,.88);
+  backdrop-filter:blur(5px);
+  font-family: var(--font, "Comic Sans MS", system-ui, sans-serif);
+  color:#fff;
+  animation: cfgfade .16s ease;
+}
+.cfgoverlay.hidden{ display:none; }
+@keyframes cfgfade{ from{ opacity:0 } to{ opacity:1 } }
+
+.cfgpanel{
+  width:min(880px, 100%);
+  max-height:calc(100vh - 36px);
+  display:flex; flex-direction:column;
+  background:linear-gradient(#1a1f3c,#10132a);
+  border:3px solid #000; border-radius:18px;
+  box-shadow:0 10px 0 rgba(0,0,0,.5), 0 0 40px rgba(255,138,61,.14);
+  overflow:hidden;
+  animation: cfgpop .22s cubic-bezier(.2,1.35,.4,1);
+}
+@keyframes cfgpop{ from{ transform:scale(.94) translateY(10px); opacity:0 } to{ transform:none; opacity:1 } }
+
+.cfghead{
+  display:flex; align-items:center; gap:12px;
+  padding:14px 18px 10px;
+  border-bottom:2px solid #000;
+  background:linear-gradient(#242c4d,#1a2039);
+}
+.cfgtitle{
+  margin:0; flex:1 1 auto;
+  font-size:22px; letter-spacing:3px; color:#ffd166; text-shadow:2px 2px 0 #000;
+}
+.cfgclose{
+  font-family:inherit; font-size:15px; cursor:pointer;
+  width:30px; height:30px; border-radius:8px;
+  background:#2a3157; color:#fff; border:2px solid #000; box-shadow:0 3px 0 #000;
+}
+.cfgclose:active{ transform:translateY(3px); box-shadow:none; }
+
+.cfgtabslot{ padding:10px 16px 0; }
+.cfgtabs{ display:flex; gap:7px; flex-wrap:wrap; }
+.cfgtab{
+  font-family:inherit; font-size:11px; letter-spacing:1.2px; cursor:pointer;
+  padding:6px 11px; border-radius:9px 9px 0 0;
+  background:#171c36; color:#9aa6d8; border:2px solid #000; border-bottom:none;
+}
+.cfgtab:hover{ color:#fff; }
+.cfgtab.active{ background:#2a3157; color:#ffd166; }
+
+.cfgbodyslot{ padding:12px 16px 4px; overflow:auto; }
+.cfgbody{ display:grid; gap:16px; grid-template-columns:1fr 1fr; }
+@media (max-width:640px){ .cfgbody{ grid-template-columns:1fr; } }
+
+.cfgcol{
+  background:rgba(255,255,255,.03);
+  border:2px solid #000; border-radius:12px; padding:10px 12px 12px;
+}
+.cfgphead{
+  margin:0 0 9px; font-size:13px; letter-spacing:1.6px;
+  color:#ffd166; text-shadow:2px 2px 0 #000;
+}
+.cfgrow{
+  display:flex; align-items:center; gap:8px;
+  padding:3px 0;
+}
+.cfglabel{ flex:1 1 auto; font-size:12px; opacity:.82; }
+
+.keyslot{
+  font-family:inherit; cursor:pointer;
+  min-width:78px; padding:5px 8px;
+  font-size:11px; letter-spacing:1px;
+  background:#242c4d; color:#fff;
+  border:2px solid #000; border-radius:8px; box-shadow:0 3px 0 #000;
+  transition:transform .06s, background .15s;
+}
+.keyslot:hover{ background:#323d6b; }
+.keyslot:active{ transform:translateY(3px); box-shadow:none; }
+.keyslot b{ font-weight:700; }
+.keyslot b.none{ opacity:.4; }
+.keyslot i{ opacity:.4; font-style:normal; margin:0 2px; }
+.keyslot.armed{
+  background:#3b2a12; color:#ffd166; border-color:#ffd166;
+  animation: cfgarmed .8s infinite alternate;
+}
+@keyframes cfgarmed{ from{ box-shadow:0 3px 0 #000 } to{ box-shadow:0 3px 0 #000, 0 0 12px #ffd166 } }
+
+.cfgmusic{
+  margin:10px 16px 0; padding:10px 12px;
+  background:rgba(255,255,255,.03);
+  border:2px solid #000; border-radius:12px;
+}
+.cfgmrow{ display:flex; align-items:center; gap:10px; }
+.cfgtoggle{
+  font-family:inherit; cursor:pointer; display:flex; align-items:center; gap:7px;
+  padding:4px 10px 4px 5px; font-size:11px; letter-spacing:1px;
+  background:#242c4d; color:#9aa6d8; border:2px solid #000; border-radius:20px;
+}
+.cfgtoggle .knob{
+  width:14px; height:14px; border-radius:50%;
+  background:#5a6494; box-shadow:inset 0 0 0 2px #000; transition:background .15s;
+}
+.cfgtoggle.on{ color:#8de04a; }
+.cfgtoggle.on .knob{ background:#8de04a; }
+.cfgslider{ flex:0 0 150px; accent-color:#ff8a3d; }
+.cfgvol{ font-size:11px; opacity:.6; width:40px; text-align:right; }
+
+.cfgfoot{
+  display:flex; gap:10px; justify-content:flex-end;
+  padding:12px 16px 14px;
+  border-top:2px solid #000; margin-top:10px;
+}
+.cfgbtn{
+  font-family:inherit; cursor:pointer; font-size:12px; letter-spacing:1.5px;
+  padding:9px 18px; border-radius:10px;
+  background:#ff8a3d; color:#12152b; border:2px solid #000; box-shadow:0 3px 0 #000;
+  font-weight:700;
+}
+.cfgbtn.ghost{ background:#2a3157; color:#fff; }
+.cfgbtn:active{ transform:translateY(3px); box-shadow:none; }
+
+.cfgtoast{
+  margin:0 16px 12px; padding:7px 12px;
+  font-size:11px; letter-spacing:1.2px;
+  background:#12240f; color:#8de04a; border:2px solid #000; border-radius:8px;
+  opacity:0; transform:translateY(6px); transition:opacity .2s, transform .2s;
+}
+.cfgtoast.show{ opacity:1; transform:none; }
+.cfgtoast.bad{ background:#2a1414; color:#ff8a3d; }
+
+.cfgsong{
+  margin-top:9px; font-size:11px; letter-spacing:1.2px; opacity:.72;
+}
+.cfgsong b{ color:#ffd166; }
+
+body.cfg-locked{ overflow:hidden; }
+
+/* ---------- the bar button that opens this panel ---------- */
+.ctlbtn{
+  font-family:var(--font, "Comic Sans MS", system-ui, sans-serif);
+  display:flex; align-items:center; gap:7px;
+  font-size:12px; font-weight:700; letter-spacing:1.2px;
+  padding:8px 13px; cursor:pointer; white-space:nowrap;
+  background:#ffd166; color:#12152b;
+  border:2px solid #000; border-radius:10px; box-shadow:0 3px 0 #000;
+  transition:transform .06s, background .15s;
+}
+.ctlbtn:hover{ background:#ffe08a; }
+.ctlbtn:active{ transform:translateY(3px); box-shadow:none; }
+.ctlbtn .gear{ font-size:15px; line-height:1; }
+

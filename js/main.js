@@ -5,6 +5,13 @@ import { Input } from './input.js';
 import { WEAPONS, weaponById } from './weapons.js';
 import { clamp } from './utils.js';
 import * as Sfx from './audio.js';
+import { getKeys, onChange, keyLabel, musicEnabled } from './shared/config.js';
+import { initControlsButton, openControls } from './shared/controls.js';
+import { startMusic } from './shared/music.js';
+
+// Wire the gear button before anything else, so the settings panel is
+// reachable even if the game below trips over something while it boots.
+initControlsButton('btn-controls', 'artillery');
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d', { alpha: false });
@@ -34,6 +41,7 @@ const el = {
   helpBtn: $('btn-help'),
   closeHelp: $('btn-close-help'),
   soundBtn: $('btn-sound'),
+  controlsBtn: $('btn-controls'),
   restartBtn: $('btn-restart'),
   timerToggle: $('timerToggle'),
   windArrow: $('windArrow'),
@@ -263,6 +271,22 @@ el.soundBtn.addEventListener('click', () => {
   el.soundBtn.textContent = m ? '🔇' : '🔊';
 });
 
+// controls panel + background music
+if (musicEnabled()) startMusic('artillery');
+
+function artilleryHint() {
+  const b = getKeys('artillery', 0);
+  const k = (a) => keyLabel((b[a] || [])[0]);
+  return `<b>MOVE</b> ${k('left')} / ${k('right')} &nbsp;·&nbsp; <b>AIM</b> mouse or ${k('aimUp')} / ${k('aimDown')} &nbsp;·&nbsp; `
+    + `<b>FIRE</b> hold click or ${k('fire')}, release &nbsp;·&nbsp; <b>WEAPON</b> 1–5 or ${k('weaponPrev')}/${k('weaponNext')} &nbsp;·&nbsp; <b>HELP</b> H`;
+}
+function refreshHint() {
+  const hint = document.getElementById('hinttext');
+  if (hint) hint.innerHTML = artilleryHint();
+}
+refreshHint();
+onChange(({ gameId }) => { if (!gameId || gameId === 'artillery') refreshHint(); });
+
 // unlock audio on the first gesture anywhere
 const unlock = () => { Sfx.initAudio(); Sfx.resumeAudio(); };
 window.addEventListener('pointerdown', unlock, { once: true });
@@ -276,6 +300,7 @@ window.addEventListener('keydown', (e) => {
     el.soundBtn.textContent = m ? '🔇' : '🔊';
   }
   if (e.code === 'KeyR' && !paused) startMatch();
+  if (e.code === 'F2') { e.preventDefault(); openControls('artillery'); }
 });
 
 document.addEventListener('visibilitychange', () => { if (!document.hidden) Sfx.resumeAudio(); });

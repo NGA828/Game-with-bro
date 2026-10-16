@@ -79,6 +79,17 @@ export class Input {
     return false;
   }
 
+  /** Consume the first of several keys that was pressed this frame. */
+  consumeAny(...codes) {
+    for (const c of codes) {
+      if (this.pressBuffer.has(c)) {
+        this.pressBuffer.delete(c);
+        return true;
+      }
+    }
+    return false;
+  }
+
   /** Clear per-frame flags. Call at the END of each frame. */
   endFrame() {
     this.pressBuffer.clear();
